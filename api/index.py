@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # 配置Vercel Blob的API访问令牌
 VERCEL_BLOB_API_URL = "https://api.vercel.com/v2/blob"
-VERCEL_ACCESS_TOKEN = os.getenv("VERCEL_ACCESS_TOKEN")  # 从环境变量获取访问令牌
+VERCEL_ACCESS_TOKEN = os.getenv("BLOB_READ_WRITE_TOKEN")  # 从环境变量获取访问令牌
 
 # 配置允许的内容类型
 ALLOWED_CONTENT_TYPE = "application/json"
