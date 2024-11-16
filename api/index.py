@@ -1,12 +1,17 @@
 import os
 import uuid
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import vercel_blob
 
 app = Flask(__name__)
 
 # 设置允许上传的内容类型
 ALLOWED_CONTENT_TYPE = 'application/json'
+
+# 首页路由，显示静态页面
+@app.route('/')
+def home():
+    return render_template('index.html')  # 渲染 templates/index.html
 
 @app.route('/convert', methods=['POST'])
 def convert_svg_to_html():

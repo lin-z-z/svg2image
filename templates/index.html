@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG to HTML Converter</title>
+    <style>
+        /* 全局样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+            background-size: 300% 300%;
+            animation: gradientBG 10s ease infinite;
+        }
+
+        /* 背景渐变动画 */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+        }
+
+        .container h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .container p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 3s ease-out;
+        }
+
+        .sparkle {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffdd57;
+            text-shadow: 0 0 10px #ffdd57, 0 0 20px #ffdd57;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* 文字淡入动画 */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 星星效果 */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .stars span {
+            position: absolute;
+            display: block;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: twinkle 10s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-10px); opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 星星背景 -->
+    <div class="stars">
+        <!-- 生成多个星星 -->
+        <span style="width: 5px; height: 5px; top: 10%; left: 20%; animation-duration: 4s;"></span>
+        <span style="width: 8px; height: 8px; top: 50%; left: 70%; animation-duration: 6s;"></span>
+        <span style="width: 6px; height: 6px; top: 30%; left: 80%; animation-duration: 8s;"></span>
+        <span style="width: 10px; height: 10px; top: 60%; left: 40%; animation-duration: 5s;"></span>
+        <span style="width: 4px; height: 4px; top: 80%; left: 10%; animation-duration: 7s;"></span>
+    </div>
+
+    <!-- 内容 -->
+    <div class="container">
+        <h1>Welcome to SVG to HTML Converter</h1>
+        <p>✨ The best place to transform your SVG into beautiful previews ✨</p>
+        <p class="sparkle">🌟 Sparkle and Shine 🌟</p>
+    </div>
+</body>
+</html>
