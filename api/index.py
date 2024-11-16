@@ -9,6 +9,8 @@ app = Flask(__name__)
 # 定义保存SVG文件和HTML文件的文件夹
 OUTPUT_FOLDER = './output_svg'
 HTML_OUTPUT_FOLDER = './output_html'
+# 从环境变量中读取 BASE_URL 前缀（默认是空字符串）
+BASE_URL = os.getenv('BASE_URL', '')  # 如果未设置，默认为空字符串
 
 # 创建文件夹（如果不存在）
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
@@ -98,8 +100,9 @@ def convert_svg_to_html():
             f.write(html_content)
 
         # 构造HTML文件的URL并返回
-        html_url = f'/output_html/{html_filename}'
-        return jsonify({"html_url": html_url, "svg_url": f'/output_svg/{svg_filename}'}), 200
+        html_url = f'{BASE_URL}/output_html/{html_filename}'
+        svg_url = f'{BASE_URL}/output_svg/{svg_filename}'
+        return jsonify({"html_url": html_url, "svg_url": svg_url}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
