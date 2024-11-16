@@ -1,2 +1,3 @@
 Flask
 requests
+vercel_blob
