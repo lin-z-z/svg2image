@@ -1,2 +1,1 @@
-Flask==2.2.3
-flask-serverless==0.1.4
+Flask
