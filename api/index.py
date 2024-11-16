@@ -1,7 +1,6 @@
 import os
 from flask import Flask, request, jsonify, send_from_directory
 import uuid
-from flask_serverless import create_app
 
 # 创建Flask应用
 app = Flask(__name__)
@@ -121,5 +120,4 @@ def serve_html(filename):
 
 # 在Vercel上启动Flask应用
 if __name__ == '__main__':
-    app = create_app(app)
     app.run(debug=True)
