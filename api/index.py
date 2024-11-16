@@ -6,8 +6,8 @@ import uuid
 app = Flask(__name__)
 
 # 定义保存SVG文件和HTML文件的文件夹
-OUTPUT_FOLDER = './output_svg'
-HTML_OUTPUT_FOLDER = './output_html'
+OUTPUT_FOLDER = '/tmp/output_svg'
+HTML_OUTPUT_FOLDER = '/tmp/output_html'
 # 从环境变量中读取 BASE_URL 前缀（默认是空字符串）
 BASE_URL = os.getenv('BASE_URL', '')  # 如果未设置，默认为空字符串
 
