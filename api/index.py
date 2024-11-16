@@ -18,11 +18,15 @@ def get_blob_upload_url():
     headers = {
         "Authorization": f"Bearer {VERCEL_ACCESS_TOKEN}"
     }
-    response = requests.post(f"{VERCEL_BLOB_API_URL}/upload", headers=headers)
+    payload = {
+        "expiresIn": 3600  # 设置签名 URL 的有效期，单位为秒
+    }
+    response = requests.post(f"{VERCEL_BLOB_API_URL}/upload", headers=headers, json=payload)
     if response.status_code == 200:
-        return response.json()["url"]  # 返回签名的URL
+        return response.json()["url"]  # 返回签名的上传 URL
     else:
         raise Exception(f"Failed to get blob upload URL: {response.json()}")
+
 
 # 上传文件到Vercel Blob
 def upload_file_to_blob(file_content, file_type):
