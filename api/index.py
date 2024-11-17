@@ -9,11 +9,10 @@ app = Flask(__name__)
 ALLOWED_CONTENT_TYPE = 'application/json'
 
 # 自动换行逻辑函数
-def add_line_breaks_to_svg(svg_string, max_chars_per_line=30):
+def add_line_breaks_to_svg(svg_string, max_chars_per_line=30, line_height=20):
     """
     对 SVG 内容中的文本段落进行换行处理，限制每行的字符数。
     """
-    # 查找所有 <text> 标签中的内容并添加换行
     import re
     pattern = r"<text([^>]*)>(.*?)</text>"
     matches = re.findall(pattern, svg_string)
@@ -34,11 +33,18 @@ def add_line_breaks_to_svg(svg_string, max_chars_per_line=30):
         if current_line:
             lines.append(" ".join(current_line))
 
-        # 构造带 <tspan> 的新内容
-        new_content = ''.join([f'<tspan x="0" dy="{20 * i}">{line}</tspan>' for i, line in enumerate(lines)])
-        updated_svg = updated_svg.replace(f"<text{attributes}>{content}</text>", f"<text{attributes}>{new_content}</text>")
+        # 构造带 <tspan> 的新内容，dy 增加 line_height 间隔
+        new_content = ''.join([
+            f'<tspan x="0" dy="{line_height if i > 0 else 0}">{line}</tspan>'
+            for i, line in enumerate(lines)
+        ])
+        updated_svg = updated_svg.replace(
+            f"<text{attributes}>{content}</text>",
+            f"<text{attributes}>{new_content}</text>"
+        )
 
     return updated_svg
+
 
 # 首页路由，显示静态页面
 @app.route('/')
