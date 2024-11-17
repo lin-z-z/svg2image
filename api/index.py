@@ -8,44 +8,6 @@ app = Flask(__name__)
 # 设置允许上传的内容类型
 ALLOWED_CONTENT_TYPE = 'application/json'
 
-# 自动换行逻辑函数
-def add_line_breaks_to_svg(svg_string, max_chars_per_line=30, line_height=20):
-    """
-    对 SVG 内容中的文本段落进行换行处理，限制每行的字符数。
-    """
-    import re
-    pattern = r"<text([^>]*)>(.*?)</text>"
-    matches = re.findall(pattern, svg_string)
-
-    updated_svg = svg_string
-    for match in matches:
-        attributes, content = match
-        words = content.split()  # 按空格分隔
-        lines = []
-        current_line = []
-
-        for word in words:
-            current_line.append(word)
-            if len(" ".join(current_line)) > max_chars_per_line:
-                lines.append(" ".join(current_line[:-1]))
-                current_line = [word]
-
-        if current_line:
-            lines.append(" ".join(current_line))
-
-        # 构造带 <tspan> 的新内容，dy 增加 line_height 间隔
-        new_content = ''.join([
-            f'<tspan x="0" dy="{line_height if i > 0 else 0}">{line}</tspan>'
-            for i, line in enumerate(lines)
-        ])
-        updated_svg = updated_svg.replace(
-            f"<text{attributes}>{content}</text>",
-            f"<text{attributes}>{new_content}</text>"
-        )
-
-    return updated_svg
-
-
 # 首页路由，显示静态页面
 @app.route('/')
 def home():
@@ -68,14 +30,11 @@ def convert_svg_to_html():
         # 替换未转义的 '&' 为 '&amp;'
         svg_string = svg_string.replace("&", "&amp;")
 
-        # 动态处理 SVG：添加换行
-        updated_svg = add_line_breaks_to_svg(svg_string)
-
         # 使用 UUID 生成唯一的 SVG 文件名
         svg_filename = f"{uuid.uuid4()}.svg"
 
         # 将 SVG 内容上传到 Vercel Blob
-        svg_blob = vercel_blob.put(svg_filename, updated_svg.encode('utf-8'), {
+        svg_blob = vercel_blob.put(svg_filename, svg_string.encode('utf-8'), {
             "contentType": "image/svg+xml",
             "access": "public"
         })
